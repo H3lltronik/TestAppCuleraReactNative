@@ -1,7 +1,10 @@
 import { StyleSheet, Text, View, Button, Image,SafeAreaView, ScrollView, ImageBackground, ActivityIndicator, TouchableOpacity, BackHandler  } from 'react-native';
-import { NavigationEvents } from 'react-navigation';
+import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 import React, { Component } from 'react';
 import axios from 'axios'
+
+import Album from '../pages/Albums'
+import Images from '../pages/Images'
 
 const USERS = 'https://jsonplaceholder.typicode.com/users'
 
@@ -93,37 +96,9 @@ class Profile extends Component {
           <SafeAreaView style={{flex: 1}}>
             <ScrollView>
               { (!this.state.onPhotos)?
-                <View>
-                  <Text>Albums cargados: { this.state.albums.length }</Text>
-
-                  <View style={styles.albumsGrid}>
-                    {this.state.albums.map((album) => {
-                      return <TouchableOpacity key={album.id} style={styles.albumsItem} onPress={() => { this.loadPhotos (album) } }>
-                      <ImageBackground  style={{width: '100%', height: 150}} source={{uri: 'https://picsum.photos/id/813/500/300'}}>
-                        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                          <Text style={{paddingHorizontal: 10, textAlign: 'center'}}>{ album.title }</Text>
-                        </View>
-                      </ImageBackground >
-                      </TouchableOpacity>
-                    })}
-                  </View>
-                </View>
+                <Album albums={this.state.albums}/>
                 :
-                <View>
-                  <Text>Fotos cargadas: { this.state.images.length }</Text>
-
-                  <View style={styles.albumsGrid}>
-                    {this.state.images.map((image) => {
-                      return <TouchableOpacity key={image.id} style={styles.albumsItem}>
-                      <ImageBackground  style={{width: '100%', height: 150}} source={{uri: image.thumbnailUrl}}>
-                        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                          <Text style={{paddingHorizontal: 10, textAlign: 'center'}}>{ image.title }</Text>
-                        </View>
-                      </ImageBackground >
-                      </TouchableOpacity>
-                    })}
-                  </View>
-                </View>
+                <Images images={this.state.images}/>
               }
             </ScrollView>
           </SafeAreaView>
@@ -160,17 +135,6 @@ class Profile extends Component {
     nickname: {
         fontSize: 14,
         color: 'gray',   
-    },
-    albumsGrid: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-    },
-    albumsItem: {
-      width: '50%',
-      height: 'auto',
-      marginVertical: 2,
-      paddingHorizontal: 5,
-      position: 'relative'
     },
 })
 
