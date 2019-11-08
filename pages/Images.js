@@ -27,4 +27,18 @@ class Images extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+    albumsGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    albumsItem: {
+        width: '50%',
+        height: 'auto',
+        marginVertical: 2,
+        paddingHorizontal: 5,
+        position: 'relative'
+    },
+})
+
 export default Images;

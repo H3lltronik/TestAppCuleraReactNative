@@ -1,12 +1,17 @@
-import { StyleSheet, Text, View, Button, Image,SafeAreaView, ScrollView, ImageBackground, ActivityIndicator, TouchableOpacity, BackHandler  } from 'react-native';
+import { StyleSheet, Text, View, Button, Image,SafeAreaView, ScrollView, ImageBackground, ActivityIndicator, TouchableOpacity, BackHandler,  Dimensions, StatusBar  } from 'react-native';
+import { TabView, SceneMap } from 'react-native-tab-view';
 import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 import React, { Component } from 'react';
 import axios from 'axios'
 
-import Album from '../pages/Albums'
-import Images from '../pages/Images'
+import AlbumContainer from '../pages/AlbumContainer'
+import PostsContainer from '../pages/PostsContainer'
 
 const USERS = 'https://jsonplaceholder.typicode.com/users'
+
+const SecondRoute = () => (
+  <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
+);
 
 class Profile extends Component {
 
@@ -21,6 +26,12 @@ class Profile extends Component {
       loading: false,
       selectedAlbum: {},
       onPhotos: false,
+
+      index: 0,
+      routes: [
+        { key: 'first', title: 'First' },
+        { key: 'second', title: 'Second' },
+      ],
     }
 
     static navigationOptions = {
@@ -51,7 +62,7 @@ class Profile extends Component {
       this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => { console.log("Hardware Back!!!!") });
     }
 
-    loadPhotos (album) {
+    loadPhotos (album) {      
       this.setState({ 
         onPhotos: true,
         loading: true,
@@ -93,15 +104,11 @@ class Profile extends Component {
           </View>
           <View style={{ borderBottomColor: 'gray', borderBottomWidth: 1, marginTop: 10, }} />
 
-          <SafeAreaView style={{flex: 1}}>
-            <ScrollView>
-              { (!this.state.onPhotos)?
-                <Album albums={this.state.albums}/>
-                :
-                <Images images={this.state.images}/>
-              }
-            </ScrollView>
-          </SafeAreaView>
+          <TabView
+            navigationState={this.state}
+            renderScene={ this.renderScene }
+            onIndexChange={index => this.setState({ index })}
+            style={{flex: 1, width: '100%'}}/>
 
           { this.state.loading &&
           <View style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center'}}>
@@ -111,6 +118,15 @@ class Profile extends Component {
         </View>
       );
     }
+
+    renderScene = ({ route, jumpTo }) => {
+      switch (route.key) {
+        case 'first':
+          return <AlbumContainer albums={this.state.albums} action={ (album) => { this.loadPhotos(album) } }/>;
+        case 'second':
+          return <PostsContainer userId={this.state.data.id}></PostsContainer>;
+      }
+    };
 
     
   }

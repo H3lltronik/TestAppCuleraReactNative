@@ -13,7 +13,7 @@ class Album extends Component {
 
                 <View style={styles.albumsGrid}>
                 {this.props.albums.map((album) => {
-                    return <TouchableOpacity key={album.id} style={styles.albumsItem} onPress={() => { this.loadPhotos (album) } }>
+                    return <TouchableOpacity key={album.id} style={styles.albumsItem} onPress={() => { this.props.action (album) } }>
                     <ImageBackground  style={{width: '100%', height: 150}} source={{uri: 'https://picsum.photos/id/813/500/300'}}>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                         <Text style={{paddingHorizontal: 10, textAlign: 'center'}}>{ album.title }</Text>
