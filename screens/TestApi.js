@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Alert, SafeAreaView, ScrollView, ActivityIndica
 import { Container, Header, Button, Content, Item, Input, Icon } from 'native-base';
 import * as DocumentPicker from 'expo-document-picker';
 import React, { Component } from 'react';
-import axios from 'axios';
+import * as axios from 'axios'
 
 export default class IconTextboxExample extends Component {
 
@@ -12,25 +12,49 @@ export default class IconTextboxExample extends Component {
   }
     
   static navigationOptions = {
-      headerTitle: "Ola anburgesa" ,
+      headerTitle: "Ola anburgesa localizada" ,
       headerLeft: (<Icon style={{ marginLeft: 25 }} type="FontAwesome" name="arrow-left" />),
   };
 
-  async login () {
-    let response = await DocumentPicker.getDocumentAsync({type: '*/*'})
+  async fileUpload () {
+    let response = await DocumentPicker.getDocumentAsync({type: 'image/jpeg'})
+    response.type = 'image/jpeg'
 
     const data = new FormData();
-
     data.append('file', response);
 
-    await axios.post('http://192.168.0.3:8000/api/file', data, {headers: {
-      'content-type': `multipart/form-data; boundary=${form._boundary}`,
-    },})
+    axios.post('http://192.168.0.2:8000/api/file', data , {headers: { 'Content-type': 'application/x-www-form-urlencoded' }} )
     .then(res => {
-      console.log("ira nomas", res)
+      console.log("gooosh", res.data)
+    })
+    .catch(error => {
+      console.log("error", error, JSON.stringify(error))
     });
-    console.log("salida", response)
+  }
 
+  login = () => {
+    let data = { 
+      'email': this.state.username, 
+      'password': this.state.password 
+    }
+
+    axios.post('http://192.168.0.2:8000/api/login', data, { headers: { 'Content-Type':  'application/json' }})
+    .then(res => {
+      console.log("ira nomas el login", res.data)
+    })
+    .catch(error => {
+      console.log("error login", error, JSON.stringify(error))
+    });
+  }
+
+  secret = () => {
+    axios.post('http://192.168.0.2:8000/api/secret')
+    .then(res => {
+      console.log("El secreto", res.data)
+    })
+    .catch(error => {
+      console.log("error login", error, JSON.stringify(error))
+    });
   }
 
   render() {
@@ -38,6 +62,8 @@ export default class IconTextboxExample extends Component {
       <Container>
         <Content contentContainerStyle={styles.container}>
             <Image source={require('../images/Katawa_Shoujo_logo.png')} />
+
+            <Text>asd { this.state.username }</Text>
 
             <View style={{width: '90%' }}>
               <Item>
@@ -51,9 +77,28 @@ export default class IconTextboxExample extends Component {
               </Item>
             </View>
 
-            <Button style={{width: '50%' }} onPress={this.login}>
-              <Text>Login</Text>
-            </Button>
+            <View style={{width: '50%' }}>
+              <Button style={{ marginTop: 20 }} onPress={this.login}>
+                <Text>Login</Text>
+              </Button>
+
+              <Button style={{ marginTop: 20 }} onPress={this.fileUpload}>
+                <Text>Imagen</Text>
+              </Button>
+
+              <Button style={{ marginTop: 20 }} onPress={this.secret}>
+                <Text>Secret</Text>
+              </Button>
+
+              <Button style={{ marginTop: 20 }} onPress={  () => { this.props.navigation.navigate('Location') } }>
+                <Text>Location</Text>
+              </Button>
+
+              <Button style={{ marginTop: 20 }} onPress={  () => { this.props.navigation.navigate('Camera') } }>
+  
+                <Text>Camera</Text>
+              </Button>
+            </View>
 
 
         </Content>
