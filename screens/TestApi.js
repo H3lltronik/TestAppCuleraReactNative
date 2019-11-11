@@ -4,7 +4,9 @@ import * as DocumentPicker from 'expo-document-picker';
 import React, { Component } from 'react';
 import * as axios from 'axios'
 
-export default class IconTextboxExample extends Component {
+import { connect } from 'react-redux';
+
+class TestApi extends Component {
 
   state = {
     username: '',
@@ -81,9 +83,9 @@ export default class IconTextboxExample extends Component {
               <Button style={{ marginTop: 20 }} onPress={this.login}>
                 <Text>Login</Text>
               </Button>
-
-              <Button style={{ marginTop: 20 }} onPress={this.fileUpload}>
-                <Text>Imagen</Text>
+              
+              <Button style={{ marginTop: 20 }} onPress={ () => { store.dispatch({type: 'TODO_ADD', todo: { id: '0', name: 'learn redux', completed: false }}); } }>
+                <Text>Kyaaaaa</Text>
               </Button>
 
               <Button style={{ marginTop: 20 }} onPress={this.secret}>
@@ -115,3 +117,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 })
+
+const mapStateToProps = (state) => {
+  console.log("irawe 1", state)
+  return {
+    // images: state.images,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  console.log("irawe 2", state)
+  return {
+    // updateImage: () => dispatch(updateImageAction()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestApi)
