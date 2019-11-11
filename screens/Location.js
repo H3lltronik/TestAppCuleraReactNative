@@ -7,6 +7,8 @@ import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
+import Camera from './Camera';
+
 // ZIP 20.6535474 -103.3093256
 // 20.6535284 -103.3094225
 const centerPt = {
@@ -14,7 +16,6 @@ const centerPt = {
     longitude: -103.3093256
 }
 const threshold = 0.01;
-
 
 export default class App extends Component {
     state = {
@@ -67,11 +68,13 @@ export default class App extends Component {
         isInArea = this.isWithinCircle(location.coords , centerPt , threshold) 
 
         if (isInArea) {
-            respuesta = <Text>Dentro del area!!</Text>
+            respuesta = <View>
+              <Text>Dentro del area!!</Text>
+              <Button onPress={ () => { this.props.navigation.navigate('Camera', {location: this.state.location}) } } title="Ola fotos pls"/>
+            </View>
         } else {
             respuesta = <Text>Afuera del area!!</Text>
         }
-
       }
       
   

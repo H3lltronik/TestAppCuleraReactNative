@@ -7,6 +7,8 @@ import TabsTest from './screens/TabsTest'
 import TestApi from './screens/TestApi'
 import Location from './screens/Location'
 import Camera from './screens/Camera'
+import ImagePreview from './screens/ImagePreview'
+
 
 const MainNavigator = createStackNavigator({
   // Home: {screen: TabsTest},
@@ -14,6 +16,7 @@ const MainNavigator = createStackNavigator({
   Profile: {screen: ProfileScreen},
   Location: {screen: Location},
   Camera: {screen: Camera},
+  ImagePreview: {screen: ImagePreview},
 });
 
 const App = createAppContainer(MainNavigator);

@@ -17,8 +17,8 @@ export default class CameraExample extends React.Component {
   snap = async () => {
     if (this.camera) {
       let photo = await this.camera.takePictureAsync({ quality: 1 });
-
-      console.log("LA FOTO", photo)
+      
+      this.props.navigation.navigate('ImagePreview', {image: { photo, location: this.props.navigation.state.params.location}})
     }
   };
 
@@ -31,7 +31,7 @@ export default class CameraExample extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref; }}>
+          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref; }} >
             <View
               style={{
                 flex: 1,
@@ -66,6 +66,7 @@ export default class CameraExample extends React.Component {
                 onPress={() => { this.snap() }}>
                 <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Snap! </Text>
               </TouchableOpacity>
+              
             </View>
           </Camera>
         </View>
