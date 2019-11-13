@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Platform, StatusBar, Image } from 'react-native';
 import { Container, Header, Content, Button, Icon, Text } from 'native-base';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
@@ -44,30 +44,21 @@ export default class CameraSicresa extends React.Component {
           <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref; }} >
             <View style={{ flex: 1, backgroundColor: 'transparent', flexDirection: 'row'}}>
 
-              <Ionicons style={{ position: 'absolute', top: 0, left: 0, marginTop: StatusBar.currentHeight, marginLeft: 10 }} name="ios-close" size={32} color="white" />
-              <TouchableOpacity
-                style={{ backgroundColor: 'blue', flex: 1, alignSelf: 'flex-end', alignItems: 'flex-start'}}
-                onPress={() => {
-                  this.setState({
-                    type:
-                      this.state.type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back,
-                  });
-                }}>
-                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip</Text>
+              <TouchableOpacity style={{position: 'absolute', top: 0, left: 0, marginTop: StatusBar.currentHeight, marginLeft: 30}}>
+                <Ionicons style={{  }} name="ios-close" size={35} color="white" />
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={{
-                    backgroundColor: 'red',
-                  flex: 1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'flex-end',
-                }}
-                onPress={() => { this.snap() }}>
-                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Snap! </Text>
-              </TouchableOpacity>
+              <View style={{ flex: 1, alignSelf: 'flex-end', alignItems: 'center', flexDirection: 'row', marginBottom: 20}}>
+                <View style={{flex: 3, }}></View>
+
+                <TouchableOpacity style={{flex: 4, justifyContent: 'center', alignItems: 'center'}} onPress={() => { this.snap() }}>
+                  <Image style={{ resizeMode: 'cover', width: 100, height: 100}} source={require('../../images/circle.png')} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{ flex: 3, alignItems: 'center' }} >
+                  <Ionicons style={{backgroundColor: '#a88e25', borderRadius: 100, paddingHorizontal: 10, paddingVertical: 8 }} name="md-send" size={32} color="white"/>
+                </TouchableOpacity>
+              </View> 
               
             </View>
           </Camera>

@@ -14,6 +14,7 @@ import Logged from './screens/Logged'
 
 import SicresaLogin from './screens/Sicresa/Login'
 import SicresaCamera from './screens/Sicresa/Camera'
+import SicresaInicio from './screens/Sicresa/Inicio'
 
 import {Provider} from 'react-redux';
 import configureStore from './store/index'
@@ -26,8 +27,10 @@ const unsubscribe = store.subscribe(() => {
 
 const MainNavigator = createStackNavigator({
   // Home: {screen: TabsTest},
-  // Home: {screen: TestApi},
-  Home: {screen: SicresaCamera},
+  // Home: {screen: SicresaCamera},
+  Home: {screen: SicresaLogin},
+  Login: {screen: SicresaInicio},
+  TestApi: {screen: TestApi},
   Profile: {screen: ProfileScreen},
   Location: {screen: Location},
   Camera: {screen: Camera},

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Alert, SafeAreaView, ScrollView, StatusBar, ActivityIndicator, Image, TextInput } from 'react-native';
 import { Container, Header, Button, Content, Item, Input, Icon } from 'native-base';
+import { StackActions, NavigationActions  } from 'react-navigation'
 import * as DocumentPicker from 'expo-document-picker';
 import React, { Component } from 'react';
 import * as axios from 'axios'
@@ -11,7 +12,6 @@ class TestApi extends Component {
   state = {
     username: 'test@test.com',
     password: 'papaya',
-    todos: [],
   }
 
   constructor(props) {
@@ -52,7 +52,11 @@ class TestApi extends Component {
     axios.post('http://192.168.0.2:8000/api/login', data, { headers: { 'Content-Type':  'application/json' }})
     .then(res => {
       console.log("ira nomas el login", res.data)
-      this.props.navigation.navigate('Logged')
+      const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Logged' })],
+      }); 
+      this.props.navigation.dispatch(resetAction);
     })
     .catch(error => {
       console.log("error login", error, JSON.stringify(error))
@@ -107,7 +111,7 @@ class TestApi extends Component {
                   <Text>Covfefe</Text>
                 </Button>
 
-                <Button style={{ marginTop: 20 }} onPress={ () => { console.log(this.state) } }>
+                <Button style={{ marginTop: 20 }} onPress={ () => { console.log(this.props.todos ) } }>
                   <Text>Todo alc</Text>
                 </Button>
               </View>

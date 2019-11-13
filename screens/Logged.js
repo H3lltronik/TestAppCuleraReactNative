@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Alert, BackHandler, Platform, StatusBar } from 'react-native';
 import React, { Component } from 'react';
 import { Container, Header, Button, Content, Item, Input, Icon } from 'native-base';
-import { NavigationActions  } from 'react-navigation'
+import { StackActions, NavigationActions  } from 'react-navigation'
 
 import Camera from './Camera'
 
@@ -11,9 +11,11 @@ class Logged extends Component {
     }
 
     componentWillMount () {
-        this.props.navigator.immediatelyResetRouteStack([{
-            component: Camera
-        }])
+    }
+
+    handleBack  = () => {
+        console.log("back") 
+        this.props.navigation.popToTop(); 
     }
 
     render () {
