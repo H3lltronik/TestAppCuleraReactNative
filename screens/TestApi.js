@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Alert, SafeAreaView, ScrollView, ActivityIndicator, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Alert, SafeAreaView, ScrollView, StatusBar, ActivityIndicator, Image, TextInput } from 'react-native';
 import { Container, Header, Button, Content, Item, Input, Icon } from 'native-base';
 import * as DocumentPicker from 'expo-document-picker';
 import React, { Component } from 'react';
@@ -9,14 +9,23 @@ import { connect } from 'react-redux';
 class TestApi extends Component {
 
   state = {
-    username: '',
-    password: '',
+    username: 'test@test.com',
+    password: 'papaya',
+    todos: [],
+  }
+
+  constructor(props) {
+      super(props);
   }
     
   static navigationOptions = {
       headerTitle: "Ola anburgesa localizada" ,
       headerLeft: (<Icon style={{ marginLeft: 25 }} type="FontAwesome" name="arrow-left" />),
   };
+
+  componentWillMount () {
+    
+  }
 
   async fileUpload () {
     let response = await DocumentPicker.getDocumentAsync({type: 'image/jpeg'})
@@ -43,6 +52,7 @@ class TestApi extends Component {
     axios.post('http://192.168.0.2:8000/api/login', data, { headers: { 'Content-Type':  'application/json' }})
     .then(res => {
       console.log("ira nomas el login", res.data)
+      this.props.navigation.navigate('Logged')
     })
     .catch(error => {
       console.log("error login", error, JSON.stringify(error))
@@ -59,6 +69,10 @@ class TestApi extends Component {
     });
   }
 
+  testDispatch (iraUnaVairbale) {
+    dispatch({  })
+  }
+
   render() {
     return (
       <Container>
@@ -70,12 +84,12 @@ class TestApi extends Component {
             <View style={{width: '90%' }}>
               <Item>
                 <Icon active name='home' />
-                <Input placeholder='Username' onChangeText={(username) => this.setState({username})}/>
+                <Input placeholder='Username' value="test@test.com" onChangeText={(username) => this.setState({username})}/>
               </Item>
 
               <Item>
                 <Icon active name='home' />
-                <Input placeholder='Password' secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
+                <Input placeholder='Password' secureTextEntry={true} value="papaya" onChangeText={(password) => this.setState({password})}/>
               </Item>
             </View>
 
@@ -84,9 +98,19 @@ class TestApi extends Component {
                 <Text>Login</Text>
               </Button>
               
-              <Button style={{ marginTop: 20 }} onPress={ () => { store.dispatch({type: 'TODO_ADD', todo: { id: '0', name: 'learn redux', completed: false }}); } }>
-                <Text>Kyaaaaa</Text>
-              </Button>
+              <View>
+                <Button style={{ marginTop: 20 }} onPress={ () => { this.props.todoAdd("Ajugero") } }>
+                  <Text>Kyaaaaa</Text>
+                </Button>
+
+                <Button style={{ marginTop: 20 }} onPress={ () => { this.props.todoAdd("Agujero") } }>
+                  <Text>Covfefe</Text>
+                </Button>
+
+                <Button style={{ marginTop: 20 }} onPress={ () => { console.log(this.state) } }>
+                  <Text>Todo alc</Text>
+                </Button>
+              </View>
 
               <Button style={{ marginTop: 20 }} onPress={this.secret}>
                 <Text>Secret</Text>
@@ -118,16 +142,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state) => {
-  console.log("irawe 1", state)
+const mapStateToProps = (state, props) => {
   return {
-    // images: state.images,
+    todos: state,
   };
 };
 const mapDispatchToProps = (dispatch) => {
-  console.log("irawe 2", state)
   return {
-    // updateImage: () => dispatch(updateImageAction()),
+    todoAdd: (name) => dispatch({type: 'TODO_ADD', todo: { id: '0', name, completed: false }}),
   };
 };
 
