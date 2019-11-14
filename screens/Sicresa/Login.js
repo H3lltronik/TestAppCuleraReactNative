@@ -8,7 +8,7 @@ import * as axios from 'axios'
 class Login extends Component {
 
     static navigationOptions = {
-        header: null,
+        header: null, 
     };
 
     constructor (props) {
@@ -44,11 +44,11 @@ class Login extends Component {
                             <Input placeholder="Usuario" style={{ textAlign: 'center', color: '#a88e25' }} placeholderTextColor="#a88e25" />
                         </Item>
                         <Item style={{ marginBottom: 30, marginLeft: 30, marginRight: 30 }}>
-                            <Input placeholder="Contraseña" style={{ textAlign: 'center', color: '#a88e25' }} placeholderTextColor="#a88e25" />
-                        </Item>
+                            <Input placeholder="ContraseñaA" style={{ textAlign: 'center', color: '#a88e25' }} placeholderTextColor="#a88e25" />
+                        </Item> 
                         <Text style={{ color: '#7b8d76' }}>¿Olvidaste tu contraseña?</Text>
 
-                        <Button full dark style={{ position: 'absolute', bottom: 0, width: '100%', paddingTop: 10 }} onPress={ () => { this.props.navigation.navigate('Login') } }>
+                        <Button full dark style={{ position: 'absolute', bottom: 0, width: '100%', paddingTop: 10 }} onPress={ () => { this.props.navigation.navigate('Home') } }>
                             <Text style={{ color: 'white', fontSize: 20 }}>INICIAR SESION</Text>
                         </Button>
                     </View>

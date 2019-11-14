@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Alert, ToastAndroid, Image   } from 'react-native';
+import { StyleSheet, Text, View, Alert, ToastAndroid, Image, Dimensions    } from 'react-native';
 import React, { Component } from 'react';
 import { Container, Header, Button, Content, Item, Input, Icon, List, ListItem } from 'native-base';
 import { SplashScreen } from 'expo';
@@ -8,6 +8,7 @@ import moment from 'moment';
 
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // import {Image} from "react-native-expo-image-cache";
 
@@ -31,6 +32,7 @@ class Inicio extends Component {
         this.props.employees.forEach(employee => {
             let imagen = employee.image
             let icon;
+            let ausentStyle = { opacity: 1 }
 
             switch (employee.status) {
                 case 'ASSISTED': {
@@ -43,18 +45,19 @@ class Inicio extends Component {
                 }
                 case 'AUSENT': {
                     icon = <Ionicons style={{ borderRadius: 100, paddingHorizontal: 10, paddingVertical: 8 }} name="ios-close" size={32} color="red"/>
+                    ausentStyle = { opacity: 0.3 }
                     break;
                 }
             }
             
             lista.push( 
-                <ListItem key={employee.id}>
+                <ListItem key={employee.id} onPress={ () => { this.props.selectEmployee(employee); this.props.navigation.navigate('AuthMiddleComponent', { target: 'EmployeeAuth' }) } }>
                     <View style={{ flexDirection: 'row' }}>
 
-                        <Image style={{ height: 100, width: 100 }}  source={{uri: imagen}} /> 
+                        <Image style={{ height: 100, width: 100, ...ausentStyle}}  source={{uri: imagen}} /> 
 
                         <View style={{ flex: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10 }}>
-                            <View style={{}}>
+                            <View style={{ ...ausentStyle }}>
                                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{employee.name}</Text>
                                 <Text>{employee.lastName}</Text>
                             </View>
@@ -67,19 +70,30 @@ class Inicio extends Component {
 
         return (
             <Container style={{ marginTop: Constants.statusBarHeight }}>
-                <Header style={{ backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 20 }}>
-                        { moment().format('DD MM YYYY - hh:mm') }
-                    </Text>
-                </Header>
+                <View style={{ flexDirection: 'column', alignItems: 'stretch', paddingLeft: 0}}>
+                    <View style={{ width: Dimensions.get('window').width, backgroundColor: 'white', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingVertical: 10, paddingHorizontal: 10 }}>
+                        <Text>Comercial Mexicana</Text>
+                        <TouchableOpacity><Ionicons style={{  }} name="md-settings" size={20} color="black"/></TouchableOpacity>
+                    </View>
+                    <View style={{ width: Dimensions.get('window').width, backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ color: 'white', fontSize: 23, marginVertical: 10, fontWeight: 'bold' }}>
+                            { moment().format('DD MM YYYY - hh:mm') }
+                        </Text>
+                    </View>
+                </View>
                 <Content>
                     <List>
                         {lista} 
                     </List>
                 </Content>
-                <View>
-                    <Text>Patoso</Text>
-                </View>
+                <TouchableOpacity>
+                    <View style={{ flexDirection: 'row', width: '100%', backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', paddingVertical: 5 }}>
+                        <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                            <Image style={{ width: 20, height: 20 }} resizeMode="contain" source={require('../../images/dadadadadadada.png')} />
+                            <Text style={{ color: '#a88e25' }}>Inicio</Text>
+                        </View>
+                    </View>
+                </TouchableOpacity>
             </Container>
         );
     }
@@ -92,6 +106,7 @@ const mapStateToProps = (state, props) => {
   };
   const mapDispatchToProps = (dispatch) => {
     return {
+        selectEmployee: (employee) => dispatch({type: 'SELECT_AUTH_EMPLOYEE', employee}),
     };
   };
   

@@ -12,11 +12,15 @@ function applyAddTodo(state, action) {
 export default function reducer(state, action) {
     switch(action.type) {
       case 'TODO_ADD' : {
-        console.log('asdsaasdasd');
         return applyAddTodo(state, action);
       }
       case 'TODO_TOGGLE' : {
         return applyToggleTodo(state, action);
+      }
+      case 'SELECT_AUTH_EMPLOYEE' : {
+        let auxState = {...state}
+        auxState.employeeAuth = action.employee
+        return auxState
       }
       default : return state;
     }
