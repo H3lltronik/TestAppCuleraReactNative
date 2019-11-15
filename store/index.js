@@ -1,4 +1,5 @@
 import {createStore} from 'redux';
+import moment from 'moment';
 import Reducers from './reducers'
 
 initialState = () => {
@@ -14,7 +15,7 @@ initialState = () => {
                     lastName: 'Hernandez Ruvalcaba',
                     status: 'ASSISTED',
                     image: 'https://jis.gov.jm/media/2019/03/Rick-Harris-670x450.jpg',
-                    code: '12',
+                    code: '',
                     schedule: [
                         {
                             id: 1,
@@ -23,22 +24,22 @@ initialState = () => {
                                 minute: 0
                             }, // 24 hrs format
                             type: 'Ingreso',
-                            status: 'CHECKED',
+                            status: 'CHECKING',
                         },
                         {
                             id: 2,
                             time: {
-                                hour: 10,
-                                minute: 20
+                                hour: 11,
+                                minute: 36
                             }, // 24 hrs format
                             type: 'Reporte',
-                            status: 'FAILED',
+                            status: 'CHECKING',
                         },
                         {
                             id: 3,
                             time: {
                                 hour: 12,
-                                minute: 10
+                                minute: 22
                             }, // 24 hrs format
                             type: 'Reporte',
                             status: 'CHECKING',
@@ -46,17 +47,18 @@ initialState = () => {
                         {
                             id: 4,
                             time: {
-                                hour: 12,
+                                hour: 16,
                                 minute: 30
                             }, // 24 hrs format
                             type: 'Reporte',
+                            registeredTime: moment(),
                             status: 'CHECKING',
                         },
                         {
                             id: 5,
                             time: {
-                                hour: 18,
-                                minute: 0
+                                hour: 17,
+                                minute: 25
                             }, // 24 hrs format
                             type: 'Salida',
                             status: 'CHECKING',

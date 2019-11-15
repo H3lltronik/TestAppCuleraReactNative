@@ -17,6 +17,7 @@ import SicresaLogin from './screens/Sicresa/Login'
 import SicresaInicio from './screens/Sicresa/Inicio'
 import EmployeeSchedule from './screens/Sicresa/EmployeeSchedule'
 import AuthMiddleComponent from './screens/Sicresa/AuthMiddleComponent'
+import RegistroCompleto from './screens/Sicresa/RegistroCompleto'
 
 import {Provider} from 'react-redux';
 import configureStore from './store/index'
@@ -36,13 +37,14 @@ const MainNavigator = createStackNavigator({
   AuthMiddleComponent: {screen: AuthMiddleComponent},
   SicresaCamera: {screen: SicresaCamera},
   SicresaImagePreview: {screen: SicresaImagePreview},
+  RegistroCompleto: {screen: RegistroCompleto},
   TestApi: {screen: TestApi},
   Profile: {screen: ProfileScreen},
   Location: {screen: Location},
   ImagePreview: {screen: ImagePreview},
   Logged: {screen: Logged},
 },
-// {initialRouteName: 'AuthMiddleComponent'}
+{initialRouteName: 'RegistroCompleto'}
 );
 
 const Root = createAppContainer(MainNavigator);

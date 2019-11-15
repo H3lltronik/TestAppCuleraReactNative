@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, StyleSheet, Platform, StatusBar, Image, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Platform, StatusBar, Image, ActivityIndicator, Dimensions } from 'react-native';
 import { Container, Header, Content, Button, Icon, Text } from 'native-base';
 import { StackActions } from "react-navigation";
 import * as Permissions from 'expo-permissions';
@@ -42,6 +42,13 @@ export default class CameraSicresa extends React.Component {
     }
   };
 
+  cameraDimensions = () => {
+    // 4:3
+    let width = Dimensions.get('window').width
+    let height = (4 * width) / 3
+    return {width, height}
+  }
+
   render() {
     const { hasCameraPermission } = this.state;
     if (hasCameraPermission === null) {
@@ -55,7 +62,7 @@ export default class CameraSicresa extends React.Component {
             ? <ActivityIndicator style={{position: 'absolute', zIndex: 10, width: '100%', height: '100%', backgroundColor: 'rgba(255, 255, 255, 0.7)'}}></ActivityIndicator>
             : <View></View>
           }
-          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => { this.camera = ref; }} >
+          <Camera style={{ width: this.cameraDimensions().width, height: this.cameraDimensions().height }} type={this.state.type} ref={ref => { this.camera = ref; }}>
             <View style={{ flex: 1, backgroundColor: 'transparent', flexDirection: 'row'}}>
 
               <TouchableOpacity style={{position: 'absolute', top: 0, left: 0, marginTop: StatusBar.currentHeight, marginLeft: 30, padding: 5}}
@@ -86,5 +93,9 @@ export default class CameraSicresa extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: 'black',
+      justifyContent: 'center',
+      alignContent: 'center',
+      alignItems: 'center',
     },
 })

@@ -34,8 +34,12 @@ class Inicio extends Component {
         });
     }
 
-    openCamera () {
+    openCamera = () => {
         this.props.navigation.navigate('SicresaCamera')
+    }
+
+    setScheduleOnCheck (schedule) {
+        this.props.setScheduleOnCheck(schedule); 
     }
 
     render () {
@@ -47,13 +51,31 @@ class Inicio extends Component {
                 let icon;
                 let ausentStyle = { opacity: 1 }
 
+                let scheduleTime = moment().hours(0).minutes(0).seconds(0).milliseconds(0);
+                scheduleTime.set({hour: schedule.time.hour, minute: schedule.time.minute, second: 0, millisecond: 0 })
+                scheduleTime.toISOString()
+
+                let isPastTime = moment().isSameOrAfter(scheduleTime)
+                let activeRegistration = false
+                let timePassed = moment().diff(scheduleTime, 'minutes')
+                let scheduleAction = (() => {})
+                
+                if (timePassed > -15 && timePassed < 15 && schedule.status != 'CHECKED') {
+                    schedule.status = 'CHECKING'
+                    activeRegistration = true
+                } else if (timePassed > 15 && schedule.status != 'CHECKED') {
+                    schedule.status = 'FAILED'
+                }
+
                 switch (schedule.status) {
-                    case 'CHECKED': {
+                    case 'CHECKING': {
                         icon = <Ionicons style={{ borderRadius: 100, paddingHorizontal: 10, paddingVertical: 8 }} name="ios-arrow-forward" size={32} color="#d6aa12"/>
+                        scheduleAction = (() => { this.setScheduleOnCheck(schedule); this.openCamera () }) 
                         break;
                     }
-                    case 'CHECKING': {
+                    case 'CHECKED': {
                         icon = <Ionicons style={{ borderRadius: 100, paddingHorizontal: 10, paddingVertical: 8 }} name="md-checkmark" size={32} color="green"/>
+                        activeRegistration = true
                         break;
                     }
                     case 'FAILED': {
@@ -63,32 +85,26 @@ class Inicio extends Component {
                     }
                 }
 
-                
-                let scheduleTime = moment().hours(0).minutes(0).seconds(0).milliseconds(0);
-                scheduleTime.set({hour: schedule.time.hour, minute: schedule.time.minute, second: 0, millisecond: 0 })
-                scheduleTime.toISOString()
-
-                let isPastTime = moment().isSameOrAfter(scheduleTime)
-                let remainingTime = moment().diff(schedule)
-
-                console.log("Remaining Time", remainingTime)
-                
-                if (isPastTime)
+                if (isPastTime || activeRegistration) {
                     lista.push( 
-                        <ListItem key={schedule.id} style={{paddingLeft: 0, marginLeft: 0}} onPress={ () => { this.openCamera () } }>
+                        <ListItem key={schedule.id} style={{paddingLeft: 0, marginLeft: 0}} onPress={ scheduleAction }>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', flex: 1 }}>
                                 <View style={{ flexDirection: 'column' }}>
                                     <Text style={{ color: 'white', fontSize: 17, marginTop: 5 }}>
                                         {schedule.type}
                                     </Text>
                                     <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 24 }}>
-                                        { scheduleTime.format('DD MM YYYY - hh:mm') }
+                                        { schedule.registeredTime
+                                            ? schedule.registeredTime.format('DD MM YYYY - hh:mm')
+                                            : scheduleTime.format('DD MM YYYY - hh:mm')
+                                        }
                                     </Text>
                                 </View>
                                 {icon}
                             </View>
                         </ListItem> 
                     )
+                }
             });
         }
 
@@ -142,7 +158,7 @@ const mapStateToProps = (state, props) => {
   };
   const mapDispatchToProps = (dispatch) => {
     return {
-
+        setScheduleOnCheck: (schedule) => dispatch({type: 'SCHEDULE_ON_CHECK', schedule}),
     };
   };
   
