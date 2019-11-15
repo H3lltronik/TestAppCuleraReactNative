@@ -30,6 +30,7 @@ class Inicio extends Component {
                 actions: [NavigationActions.navigate({ routeName: 'Home' })],
             });
             this.props.navigation.dispatch(resetAction);
+            return true
         });
     }
 
@@ -57,22 +58,38 @@ class Inicio extends Component {
                         break;
                     }
                 }
+
                 
-                lista.push( 
-                    <ListItem key={schedule.id} style={{paddingLeft: 0, marginLeft: 0}}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', flex: 1 }}>
-                            <View style={{ flexDirection: 'column' }}>
-                                <Text style={{ color: 'white', fontSize: 17, marginTop: 5 }}>
-                                    {schedule.type}
-                                </Text>
-                                <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 24 }}>
-                                    { moment().format('DD MM YYYY - hh:mm') }
-                                </Text>
+                let scheduleTime = moment().hours(0).minutes(0).seconds(0).milliseconds(0);
+                scheduleTime.set({
+                    hour: schedule.time.hour,
+                    minute: schedule.time.minute,
+                    second: 0,
+                    millisecond: 0
+                })
+                scheduleTime.toISOString()
+
+                let isPastTime = moment().isSameOrAfter(scheduleTime)
+
+                console.log("MIRAME WE", isPastTime)
+                
+                // console.log("moment we", m.format('DD MM YYYY - hh:mm'), schedule.time.hour, schedule.time.minute)  
+                if (isPastTime)
+                    lista.push( 
+                        <ListItem key={schedule.id} style={{paddingLeft: 0, marginLeft: 0}}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', flex: 1 }}>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <Text style={{ color: 'white', fontSize: 17, marginTop: 5 }}>
+                                        {schedule.type}
+                                    </Text>
+                                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 24 }}>
+                                        { scheduleTime.format('DD MM YYYY - hh:mm') }
+                                    </Text>
+                                </View>
+                                {icon}
                             </View>
-                            {icon}
-                        </View>
-                    </ListItem> 
-                )
+                        </ListItem> 
+                    )
             });
         }
 

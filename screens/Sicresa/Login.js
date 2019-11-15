@@ -4,6 +4,7 @@ import { Container, Header, Button, Content, Item, Input, Icon } from 'native-ba
 import { SplashScreen } from 'expo';
 import Constants from 'expo-constants';
 import * as axios from 'axios'
+import moment from 'moment';
 
 class Login extends Component {
 
@@ -16,6 +17,11 @@ class Login extends Component {
     }
 
     componentDidMount () {
+        var m = moment().utcOffset(0);
+        m.set({hour:13,minute:55,second:0,millisecond:0})
+        m.toISOString()
+        
+        console.log("moment we", m.format())
         // SplashScreen.preventAutoHide()
 
         // axios.post('http://192.168.0.2:8000/api/secret').then(res => {
@@ -44,7 +50,7 @@ class Login extends Component {
                             <Input placeholder="Usuario" style={{ textAlign: 'center', color: '#a88e25' }} placeholderTextColor="#a88e25" />
                         </Item>
                         <Item style={{ marginBottom: 30, marginLeft: 30, marginRight: 30 }}>
-                            <Input placeholder="ContraseñaA" style={{ textAlign: 'center', color: '#a88e25' }} placeholderTextColor="#a88e25" />
+                            <Input placeholder="Contrasee" style={{ textAlign: 'center', color: '#a88e25' }} placeholderTextColor="#a88e25" />
                         </Item> 
                         <Text style={{ color: '#7b8d76' }}>¿Olvidaste tu contraseña?</Text>
 

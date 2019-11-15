@@ -18,31 +18,46 @@ initialState = () => {
                     schedule: [
                         {
                             id: 1,
-                            time: '8:00', // 24 hrs format
+                            time: {
+                                hour: 8,
+                                minute: 0
+                            }, // 24 hrs format
                             type: 'Ingreso',
                             status: 'CHECKED',
                         },
                         {
                             id: 2,
-                            time: '10:00', // 24 hrs format
+                            time: {
+                                hour: 10,
+                                minute: 20
+                            }, // 24 hrs format
                             type: 'Reporte',
                             status: 'FAILED',
                         },
                         {
                             id: 3,
-                            time: '12:30', // 24 hrs format
+                            time: {
+                                hour: 12,
+                                minute: 10
+                            }, // 24 hrs format
                             type: 'Reporte',
                             status: 'CHECKING',
                         },
                         {
                             id: 4,
-                            time: '15:40', // 24 hrs format
+                            time: {
+                                hour: 12,
+                                minute: 30
+                            }, // 24 hrs format
                             type: 'Reporte',
                             status: 'CHECKING',
                         },
                         {
                             id: 5,
-                            time: '18:00', // 24 hrs format
+                            time: {
+                                hour: 18,
+                                minute: 0
+                            }, // 24 hrs format
                             type: 'Salida',
                             status: 'CHECKING',
                         },

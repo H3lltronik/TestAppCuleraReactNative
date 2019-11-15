@@ -24,7 +24,6 @@ class AuthMiddleComponent extends Component {
     }
 
     componentDidMount () {
-        console.log("props we", this.props.employeeAuth)
     }
 
     resetStack (target) {
