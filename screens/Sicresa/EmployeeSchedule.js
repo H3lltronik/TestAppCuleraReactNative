@@ -34,6 +34,10 @@ class Inicio extends Component {
         });
     }
 
+    openCamera () {
+        this.props.navigation.navigate('SicresaCamera')
+    }
+
     render () {
         let lista = []; 
 
@@ -61,22 +65,17 @@ class Inicio extends Component {
 
                 
                 let scheduleTime = moment().hours(0).minutes(0).seconds(0).milliseconds(0);
-                scheduleTime.set({
-                    hour: schedule.time.hour,
-                    minute: schedule.time.minute,
-                    second: 0,
-                    millisecond: 0
-                })
+                scheduleTime.set({hour: schedule.time.hour, minute: schedule.time.minute, second: 0, millisecond: 0 })
                 scheduleTime.toISOString()
 
                 let isPastTime = moment().isSameOrAfter(scheduleTime)
+                let remainingTime = moment().diff(schedule)
 
-                console.log("MIRAME WE", isPastTime)
+                console.log("Remaining Time", remainingTime)
                 
-                // console.log("moment we", m.format('DD MM YYYY - hh:mm'), schedule.time.hour, schedule.time.minute)  
                 if (isPastTime)
                     lista.push( 
-                        <ListItem key={schedule.id} style={{paddingLeft: 0, marginLeft: 0}}>
+                        <ListItem key={schedule.id} style={{paddingLeft: 0, marginLeft: 0}} onPress={ () => { this.openCamera () } }>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', flex: 1 }}>
                                 <View style={{ flexDirection: 'column' }}>
                                     <Text style={{ color: 'white', fontSize: 17, marginTop: 5 }}>

@@ -8,12 +8,12 @@ import ProfileScreen from './screens/Profile'
 import TabsTest from './screens/TabsTest'
 import TestApi from './screens/TestApi'
 import Location from './screens/Location'
-import Camera from './screens/Camera'
 import ImagePreview from './screens/ImagePreview'
 import Logged from './screens/Logged'
 
-import SicresaLogin from './screens/Sicresa/Login'
+import SicresaImagePreview from './screens/Sicresa/ImagePreview'
 import SicresaCamera from './screens/Sicresa/Camera'
+import SicresaLogin from './screens/Sicresa/Login'
 import SicresaInicio from './screens/Sicresa/Inicio'
 import EmployeeSchedule from './screens/Sicresa/EmployeeSchedule'
 import AuthMiddleComponent from './screens/Sicresa/AuthMiddleComponent'
@@ -34,10 +34,11 @@ const MainNavigator = createStackNavigator({
   Home: {screen: SicresaInicio},
   EmployeeAuth: {screen: EmployeeSchedule},
   AuthMiddleComponent: {screen: AuthMiddleComponent},
+  SicresaCamera: {screen: SicresaCamera},
+  SicresaImagePreview: {screen: SicresaImagePreview},
   TestApi: {screen: TestApi},
   Profile: {screen: ProfileScreen},
   Location: {screen: Location},
-  Camera: {screen: Camera},
   ImagePreview: {screen: ImagePreview},
   Logged: {screen: Logged},
 },

@@ -10,9 +10,14 @@ import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-// import {Image} from "react-native-expo-image-cache";
+import Toolbar from "./Components/Toolbar";
 
 class Inicio extends Component {
+    interval = null;
+
+    state = {
+        hour: ''
+    }
 
     static navigationOptions = {
         header: null,
@@ -23,6 +28,15 @@ class Inicio extends Component {
     }
 
     componentDidMount () {
+        this.setState({ hour: moment().format('DD MM YYYY - hh:mm') })
+        
+        this.interval = setInterval(() => {
+            this.setState({ hour: moment().format('DD MM YYYY - hh:mm') })
+        }, 1000);
+    }
+
+    componentWillUnmount () {
+        clearInterval (this.interval)
     }
 
     render () {
@@ -77,7 +91,7 @@ class Inicio extends Component {
                     </View>
                     <View style={{ width: Dimensions.get('window').width, backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ color: 'white', fontSize: 23, marginVertical: 10, fontWeight: 'bold' }}>
-                            { moment().format('DD MM YYYY - hh:mm') }
+                            { this.state.hour }
                         </Text>
                     </View>
                 </View>

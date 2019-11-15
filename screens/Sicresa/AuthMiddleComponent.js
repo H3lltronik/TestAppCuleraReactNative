@@ -15,6 +15,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class AuthMiddleComponent extends Component {
 
+    state = {
+        code: ''
+    }
+
     static navigationOptions = {
         header: null,
     };
