@@ -44,7 +44,7 @@ const MainNavigator = createStackNavigator({
   ImagePreview: {screen: ImagePreview},
   Logged: {screen: Logged},
 },
-{initialRouteName: 'RegistroCompleto'}
+{initialRouteName: 'Home'}
 );
 
 const Root = createAppContainer(MainNavigator);

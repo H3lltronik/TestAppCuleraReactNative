@@ -64,7 +64,8 @@ class RegistroCompleto extends React.Component {
 
                 </View>
 
-                <TouchableOpacity style={{ backgroundColor: '#0F381F',  paddingHorizontal: 10, paddingVertical: 10, textAlign: 'center' }}>
+                <TouchableOpacity style={{ backgroundColor: '#0F381F',  paddingHorizontal: 10, paddingVertical: 10, textAlign: 'center' }}
+                onPress={ () => { this.props.navigation.navigate('Home') } }>
                     <Text style={{ color: 'white', fontSize: 18, textAlign: 'center', alignSelf: 'center' }}>CONTINUAR</Text>
                 </TouchableOpacity>
 
@@ -74,8 +75,8 @@ class RegistroCompleto extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-    let idEmployee = 1
-    let idSchedule = 4
+    let idEmployee = state.employeeAuth.id
+    let idSchedule = state.scheduleOnCheck.id
     // let idEmployee = props.navigation.state.params.idEmployee
     // let idSchedule = props.navigation.state.params.idSchedule
     let employee = state.company.employees.find((auxFind) => {
@@ -90,7 +91,6 @@ const mapStateToProps = (state, props) => {
     })
 
     let nextScheduleAux = employee.schedule[employee.schedule.length];
-
     if (index < employee.schedule.length) {
         nextScheduleAux = employee.schedule[index+1]
     }
@@ -98,7 +98,9 @@ const mapStateToProps = (state, props) => {
     let nextSchedule = moment().hours(0).minutes(0).seconds(0).milliseconds(0);
     nextSchedule.set({hour: nextScheduleAux.time.hour, minute: nextScheduleAux.time.minute, second: 0, millisecond: 0 })
 
-    console.log("PROPS", employee, schedule, nextSchedule)
+    schedule.registeredTime = moment()
+
+    console.log("Empleado", employee, "Horario", schedule, "Siguiente", nextSchedule.format('DD MM YYYY - hh:mm'), "Index", index, "On check", state.scheduleOnCheck)
 
     return {employee, schedule, nextSchedule};
 };
